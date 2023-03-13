@@ -609,7 +609,6 @@ void SendFingerprintID( int finger ){
 
   if (payload.substring(0, 5) == "login") {
     String user_name = payload.substring(5);
-  //  Serial.println(user_name);
     
     display.clearDisplay();
     display.setTextSize(2);             // Normal 2:2 pixel scale
@@ -622,7 +621,6 @@ void SendFingerprintID( int finger ){
   }
   else if (payload.substring(0, 6) == "logout") {
     String user_name = payload.substring(6);
-  //  Serial.println(user_name);
     
     display.clearDisplay();
     display.setTextSize(2);             // Normal 2:2 pixel scale
