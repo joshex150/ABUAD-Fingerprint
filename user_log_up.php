@@ -11,17 +11,13 @@
         if ($_POST['date_sel'] != 0) {
             $_SESSION['seldate'] = $_POST['date_sel'];
         }
-        else{
-            $_SESSION['seldate'] = date("Y-m-d");
-        }
-      }
-      
-      if ($_POST['select_date'] == 1) {
-          $_SESSION['seldate'] = date("Y-m-d");
-      }
-      else if ($_POST['select_date'] == 0) {
-          $seldate = $_SESSION['seldate'];
-      }
+    }
+    
+    if (isset($_POST['select_date']) && $_POST['select_date'] == 1) {
+        $_SESSION['seldate'] = date("Y-m-d");
+    }
+    
+    $seldate = $_SESSION['seldate'] ?? date("Y-m-d");
 
       
       $sql = "SELECT * FROM $course WHERE checkindate='$seldate' ORDER BY id DESC";

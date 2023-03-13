@@ -286,30 +286,26 @@ if (isset($_POST['Update'])) {
 }
 // delete user 
 if (isset($_POST['delete'])) {
-
     $sql = "SELECT fingerprint_select FROM users WHERE fingerprint_select=1";
-    $result = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($result, $sql)) {
-        echo "SQL_Error_Select";
+    $result = mysqli_query($conn, $sql);
+
+    if (!$result) {
+        echo "SQL Error: " . mysqli_error($conn);
         exit();
-    } else {
-        mysqli_stmt_execute($result);
-        $resultl = mysqli_stmt_get_result($result);
-        if ($row = mysqli_fetch_assoc($resultl)) {
-            $sql = "DELETE FROM `users` WHERE fingerprint_select=1";
-            $result = mysqli_stmt_init($conn);
-            if (!mysqli_stmt_prepare($result, $sql)) {
-                echo "SQL_Error_delete";
-                exit();
-            } else {
-                mysqli_stmt_execute($result);
-                echo "The User Fingerprint has been deleted";
-                exit();
-            }
-        } else {
-            echo "Select a User to remove";
+    }
+
+    if (mysqli_num_rows($result) > 0) {
+        $sql = "UPDATE users SET del_fingerid=1 WHERE fingerprint_select=1";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            echo "SQL Error: " . mysqli_error($conn);
             exit();
         }
+        echo "The User Fingerprint has been deleted";
+        header("Location: getdata.php?DeleteID=check");
+    } else {
+        echo "Select a User to remove";
     }
 }
 mysqli_stmt_close($result);

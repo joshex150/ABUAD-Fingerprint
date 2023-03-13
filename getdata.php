@@ -298,6 +298,12 @@ if (isset($_POST['DeleteID'])) {
         exit();
     }
 }
+
+// $fingerID = $_POST['FingerID'];
+// if (isset($_POST["'confirm_id' + $fingerID"])) {
+//    echo "fingerprint registered";
+//    header("Location: manageusers_up.php?reg=true");
+// }
 mysqli_stmt_close($result);
 mysqli_close($conn);
 ?>
