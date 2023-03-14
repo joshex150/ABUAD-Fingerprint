@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Popup</title>
     <link rel="stylesheet" type="text/css" href="css/popup.css?v=3">
 </head>
@@ -13,7 +13,8 @@
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <p style="padding-bottom: 60px; text-align: center;">This action cannot be undone, <br> are you sure?</p>
+                <p style="padding-bottom: 60px; text-align: center;">This action cannot be undone, <br> are you sure?
+                </p>
                 <button id="yes-button" name="user_rmo" class="user_rmo">Yes</button><button id="no-button">No</button>
             </div>
         </div>

@@ -19,12 +19,16 @@ if (isset($_GET['mode'])) {
     $home_css_file = 'css/Users-light.css?v=16';
   }
 }
+if(!isset($_COOKIE['username'])){
+  header("Location: index.php");
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Users</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link id="style" rel="stylesheet" type="text/css" href="<?php echo $home_css_file; ?>">
   <link rel="icon" type="image/x-icon" href="images/logo.ico">
   <script language="JavaScript" type="text/javascript" src="js/jquery-2.2.3.min.js">

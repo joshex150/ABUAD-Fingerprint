@@ -1,4 +1,4 @@
-<?php include 'cachestart.php'; 
+<?php include 'cachestart.php';
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: *");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -8,27 +8,31 @@ $manageusers_css_file = 'css/manageusers.css?v=4';
 
 // Check if the user has selected a mode and set the appropriate CSS file
 if (isset($_SESSION['mode'])) {
-  if ($_SESSION['mode'] == 'light') {
-    $manageusers_css_file = 'css/manageusers-light.css?v=16';
-  }
+	if ($_SESSION['mode'] == 'light') {
+		$manageusers_css_file = 'css/manageusers-light.css?v=16';
+	}
 }
 
 // Handle mode selection
 if (isset($_GET['mode'])) {
-  if ($_GET['mode'] == 'dark') {
-    $_SESSION['mode'] = 'dark';
-    $manageusers_css_file = 'css/manageusers.css?v=4';
-  } elseif ($_GET['mode'] == 'light') {
-    $_SESSION['mode'] = 'light';
-    $manageusers_css_file = 'css/manageusers-light.css?v=16';
-  }
+	if ($_GET['mode'] == 'dark') {
+		$_SESSION['mode'] = 'dark';
+		$manageusers_css_file = 'css/manageusers.css?v=4';
+	} elseif ($_GET['mode'] == 'light') {
+		$_SESSION['mode'] = 'light';
+		$manageusers_css_file = 'css/manageusers-light.css?v=16';
+	}
 }
+if(!isset($_COOKIE['username'])){
+	header("Location: index.php");
+	exit();
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<title>Manage Users</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo $manageusers_css_file; ?>">
 	<link rel="icon" type="image/x-icon" href="images/logo.ico">
@@ -40,7 +44,7 @@ if (isset($_GET['mode'])) {
 	</script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"
 		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous">
-	</script>
+		</script>
 	<script src="js/jquery-2.2.3.min.js"></script>
 	<script src="js/manage_users.js"></script>
 	<script>
@@ -128,7 +132,7 @@ if (isset($_GET['mode'])) {
 			</div>
 		</section>
 	</main>
-	
+
 </body>
 <?php include 'footer.php'; ?>
 <script>

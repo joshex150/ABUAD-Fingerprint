@@ -23,6 +23,7 @@ if (isset($_GET['mode'])) {
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="<?php echo $footer_css_file; ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 </head>
 <body>
     <footer class="footer">

@@ -48,8 +48,6 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
             if (($row['email'] === $username || $row['username'] === $username) && $row['password'] === $pass) {
 
-                echo "Logged in!";
-
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['course'] = $row['course'];
                 $_SESSION['password'] = $row['password'];

@@ -30,6 +30,7 @@ if (isset($_GET['mode'])) {
   <title>Login</title>
   <link rel="stylesheet" type="text/css" href="<?php echo $login_css_file; ?>" />
   <link rel="icon" type="image/x-icon" href="images/logo.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 </head>
 
 <body>
