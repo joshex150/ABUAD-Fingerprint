@@ -4,6 +4,7 @@ session_start();
 
 include "connectDB.php";
 
+
 if (isset($_POST['username']) && isset($_POST['password'])) {
 
     function validate($data)
@@ -52,7 +53,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['course'] = $row['course'];
                 $_SESSION['password'] = $row['password'];
-
+                $cookie_expiration = time() + (86400 * 2);
+                setcookie('username', $_SESSION['username'], $cookie_expiration, '/');
+                setcookie('course', $_SESSION['course'], $cookie_expiration, '/' );
                 header("Location: home.php");
 
                 exit();

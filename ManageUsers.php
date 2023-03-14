@@ -1,8 +1,28 @@
-<?php include 'cachestart.php'; ?>
-<?php
+<?php include 'cachestart.php'; 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: *");
 header("Access-Control-Allow-Headers: Content-Type");
+
+session_start();
+$manageusers_css_file = 'css/manageusers.css?v=4';
+
+// Check if the user has selected a mode and set the appropriate CSS file
+if (isset($_SESSION['mode'])) {
+  if ($_SESSION['mode'] == 'light') {
+    $manageusers_css_file = 'css/manageusers-light.css?v=16';
+  }
+}
+
+// Handle mode selection
+if (isset($_GET['mode'])) {
+  if ($_GET['mode'] == 'dark') {
+    $_SESSION['mode'] = 'dark';
+    $manageusers_css_file = 'css/manageusers.css?v=4';
+  } elseif ($_GET['mode'] == 'light') {
+    $_SESSION['mode'] = 'light';
+    $manageusers_css_file = 'css/manageusers-light.css?v=16';
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +30,8 @@ header("Access-Control-Allow-Headers: Content-Type");
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<title>Manage Users</title>
-	<link rel="stylesheet" type="text/css" href="css/manageusers.css?v=9">
+	<link rel="stylesheet" type="text/css" href="<?php echo $manageusers_css_file; ?>">
+	<link rel="icon" type="image/x-icon" href="images/logo.ico">
 	<script language="JavaScript" type="text/javascript" src="js/jquery-2.2.3.min.js">
 		$(window).on("load resize ", function () {
 			var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();

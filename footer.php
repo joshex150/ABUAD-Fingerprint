@@ -1,7 +1,28 @@
+<?php
+$footer_css_file = 'css/footer.css?v=4';
+
+// Check if the user has selected a mode and set the appropriate CSS file
+if (isset($_SESSION['mode'])) {
+  if ($_SESSION['mode'] == 'light') {
+    $footer_css_file = 'css/footer-light.css?v=16';
+  }
+}
+
+// Handle mode selection
+if (isset($_GET['mode'])) {
+  if ($_GET['mode'] == 'dark') {
+    $_SESSION['mode'] = 'dark';
+    $footer_css_file = 'css/footer.css?v=4';
+  } elseif ($_GET['mode'] == 'light') {
+    $_SESSION['mode'] = 'light';
+    $footer_css_file = 'css/footer-light.css?v=16';
+  }
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="css/footer.css?v=5">
+    <link rel="stylesheet" type="text/css" href="<?php echo $footer_css_file; ?>">
 </head>
 <body>
     <footer class="footer">

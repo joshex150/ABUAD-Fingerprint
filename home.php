@@ -1,11 +1,32 @@
 <?php include 'cachestart.php'; 
+session_start();
+$home_css_file = 'css/Users.css?v=4';
+
+// Check if the user has selected a mode and set the appropriate CSS file
+if (isset($_SESSION['mode'])) {
+  if ($_SESSION['mode'] == 'light') {
+    $home_css_file = 'css/Users-light.css?v=16';
+  }
+}
+
+// Handle mode selection
+if (isset($_GET['mode'])) {
+  if ($_GET['mode'] == 'dark') {
+    $_SESSION['mode'] = 'dark';
+    $home_css_file = 'css/Users.css?v=4';
+  } elseif ($_GET['mode'] == 'light') {
+    $_SESSION['mode'] = 'light';
+    $home_css_file = 'css/Users-light.css?v=16';
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Users</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <link rel="stylesheet" type="text/css" href="css/Users.css?v=4">
+  <link id="style" rel="stylesheet" type="text/css" href="<?php echo $home_css_file; ?>">
+  <link rel="icon" type="image/x-icon" href="images/logo.ico">
   <script language="JavaScript" type="text/javascript" src="js/jquery-2.2.3.min.js">
     $(window).on("load resize ", function () {
       var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
