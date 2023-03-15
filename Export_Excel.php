@@ -6,7 +6,7 @@ $output = '';
 
 session_start();
 
-$course = $_SESSION['course'];
+$course = $_COOKIE['course'];
 
 
 if (isset($_POST["To_Excel"])) {
@@ -25,7 +25,7 @@ if (isset($_POST["To_Excel"])) {
                         
                         <table class="table" style="width:100%; border: 1px solid black;" >  
                         <center><h1>
-                        ' . $Log_date . '
+                        '. $course .' '.' '. $Log_date .'
                         </h1></center>
                           <TR style="text-align:center; border: 1px solid black;">
                             <TH>ID</TH>
@@ -33,8 +33,14 @@ if (isset($_POST["To_Excel"])) {
                             <TH>Matric Number</TH>
                             <TH>Time In</TH>
                             <TH>Time Out</TH>
+                            <TH>Present</TH>
                           </TR>';
         while ($row = $result->fetch_assoc()) {
+            if($row['timeout'] == "00:00:00"){
+                $present = 'NO';
+            }else{
+                $present = 'YES';
+            }
             $output .= '
                               <TR style="text-align:center; border: 1px solid black;"> 
                                   <TD> ' . $row['id'] . '</TD>
@@ -42,6 +48,7 @@ if (isset($_POST["To_Excel"])) {
                                   <TD> ' . $row['serialnumber'] . '</TD>
                                   <TD> ' . $row['timein'] . '</TD>
                                   <TD> ' . $row['timeout'] . '</TD>
+                                  <TD>'. $present .'</TD>
                               </TR>';
         }
         $output .= '</table>';

@@ -5,31 +5,24 @@
   padding: 5px;
 }
 .form-style-5 input[type="date"] {
+  background: rgba(60, 60, 60, 0.851);
+  color: white;
+  position: relative;
+  display: block;
+  margin: 0 auto;
   font-family: Georgia, "Times New Roman", Times, serif;
-  background: rgba(255, 255, 255, 0.1);
   border: none;
-  border-radius: 4px;
-  font-size: 13px;
-  margin: 0;
-  outline: 0;
   padding: 8px;
-  width: 100%;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  background-color: #e8eeef;
-  color: #8a97a0;
-  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+  font-size: 16px;
+  min-width: 250px;
   margin-bottom: 10px;
-  cursor: pointer;
-  line-height: 24px;
+  height: 36px;
+  text-align: center;
 }
 .form-style-5 input[type="date"]:focus {
-  background: #d2d9dd;
+  background: #616161;
 }
 
-.form-style-5 input[type="submit"],
 .form-style-5 button {
   position: relative;
   display: block;
@@ -40,12 +33,11 @@
   font-size: 14px;
   text-align: center;
   font-style: normal;
-  width: 100%;
+  width: 250px;
   border: 1px solid #191919;
   border-width: 1px 1px 3px;
   margin-bottom: 10px;
 }
-.form-style-5 input[type="submit"]:hover,
 .form-style-5 button:hover {
   background: rgba(145, 145, 145, 0.3);
   cursor: pointer;
@@ -131,26 +123,18 @@ section {
     font-size: 10px !important;
   }
   .form-style-5 input[type="date"] {
-    /* line-height: 24px; */
-    /* position: sticky; */
-    min-width: 95%;
-    min-height: 1.8rem;
+   margin-bottom: 10px;
+   -webkit-appearance: none;
+   -moz-appearance: none;
   }
-  .form-style-5 input[type="submit"] {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-  }
-  .form-style-5 input[type="submit"],
+
   .form-style-5 input[type="date"],
   .form-style-5 button {
-    padding: 5px;
-    font-size: 14px;
+    width: 250px;
   }
   .form-style-5 {
     display: block;
-    margin: 0px auto;
-    padding: 5px;
-    margin: 0px 45px;
+    margin: 0px;
     width: auto;
   }
 }

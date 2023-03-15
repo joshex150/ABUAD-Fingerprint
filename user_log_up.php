@@ -5,7 +5,7 @@
       session_start();
       //Connect to database
       require'connectDB.php';
-      $course = $_SESSION['course'];
+      $course = $_COOKIE['course'];
 
       if (isset($_POST['log_date'])) {
         if ($_POST['date_sel'] != 0) {

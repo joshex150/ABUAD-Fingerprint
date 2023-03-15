@@ -1,6 +1,7 @@
 <?php include 'cachestart.php';
 if (isset($_COOKIE['course'])) {
   header("Location: home.php");
+  exit();
 }
 session_start();
 $login_css_file = 'css/omega.css?v=2';
@@ -30,7 +31,7 @@ if (isset($_GET['mode'])) {
   <title>Login</title>
   <link rel="stylesheet" type="text/css" href="<?php echo $login_css_file; ?>" />
   <link rel="icon" type="image/x-icon" href="images/logo.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5">
 </head>
 
 <body>

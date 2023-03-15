@@ -33,11 +33,11 @@ if (isset($_GET['mode'])) {
   <input type="checkbox" id="nav-check">
   <div class="nav-header">
     <div class="nav-title">
-      <img src="images/logo.png" alt="" width="25.8px" height="30px">
+      <a href="/home.php"><img src="images/logo.png" alt="" width="25.8px" height="30px"></a>
     </div>
   </div>
   <span class="username">Hello,
-    <?php echo $_SESSION['username']; ?>
+    <?php echo $_COOKIE['username']; ?>
   </span>
   <div class="nav-btn">
     <label for="nav-check">
@@ -79,8 +79,13 @@ if (isset($_GET['mode'])) {
     ?>
 
     <a class="nav-link" href="home.php">Students</a>
-    <a class="nav-link" href="UsersLog.php">Attendance log</a>
-    <a class="nav-link" href="ManageUsers.php">Admin</a>
+    <a class="nav-link" href="UsersLog.php">Attendance Log</a>
+    <?php if ($_COOKIE['username'] == "admin") {
+      echo '<a class="nav-link" href="ManageUsers.php">Manage Students</a>';
+    } else {
+
+    }
+    ?>
     <a class="nav-link" href="logout.php">Logout</a>
     <a class="nav-link" href="<?php echo $ye; ?>"><?php echo $ey; ?></a>
   </div>

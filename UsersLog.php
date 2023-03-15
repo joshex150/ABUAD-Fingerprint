@@ -1,11 +1,11 @@
 <?php include 'cachestart.php';
 session_start();
-$UsersLog_css_file = 'css/userslog.css?v=4';
+$UsersLog_css_file = 'css/userslog.css?v=111';
 
 // Check if the user has selected a mode and set the appropriate CSS file
 if (isset($_SESSION['mode'])) {
   if ($_SESSION['mode'] == 'light') {
-    $UsersLog_css_file = 'css/userslog-light.css?v=16';
+    $UsersLog_css_file = 'css/userslog-light.css?v=111';
   }
 }
 
@@ -13,10 +13,10 @@ if (isset($_SESSION['mode'])) {
 if (isset($_GET['mode'])) {
   if ($_GET['mode'] == 'dark') {
     $_SESSION['mode'] = 'dark';
-    $UsersLog_css_file = 'css/userslog.css?v=4';
+    $UsersLog_css_file = 'css/userslog.css?v=111';
   } elseif ($_GET['mode'] == 'light') {
     $_SESSION['mode'] = 'light';
-    $UsersLog_css_file = 'css/userslog-light.css?v=16';
+    $UsersLog_css_file = 'css/userslog-light.css?v=111';
   }
 }
 if(!isset($_COOKIE['username'])){
@@ -44,28 +44,36 @@ if(!isset($_COOKIE['username'])){
   <script src="js/jquery-2.2.3.min.js"></script>
   <script src="js/user_log.js"></script>
   <script>
-    $(document).ready(function () {
+  $(document).ready(function () {
+    var previousData = '';
+    $.ajax({
+      url: "user_log_up.php",
+      type: 'POST',
+      data: {
+        'select_date': 1,
+      },
+      success: function (data) {
+        previousData = data;
+        $('#userslog').html(previousData);
+      }
+    });
+    setInterval(function () {
       $.ajax({
         url: "user_log_up.php",
         type: 'POST',
         data: {
-          'select_date': 1,
+          'select_date': 0,
+        }
+      }).done(function (data) {
+        if (data !== previousData) {
+          previousData = data;
+          $('#userslog').html(previousData);
         }
       });
-      setInterval(function () {
-        $.ajax({
-          url: "user_log_up.php",
-          type: 'POST',
-          data: {
-            'select_date': 0,
-          }
-        }).done(function (data) {
-          $('#userslog').html(data);
-        });
-      }, 5000);
-    });
-  </script>
-</head>
+    }, 5000);
+  });
+</script>
+
 
 <body>
   <?php include 'header.php'; ?>
@@ -77,13 +85,13 @@ if(!isset($_COOKIE['username'])){
     <section>
       <!--User table-->
       <h1 style="margin-top: 2rem;" class="slideInDown animated">Here are
-        <?php echo $_SESSION['course']; ?>'s daily Attendance
+        <?php echo $_COOKIE['course']; ?>'s daily Attendance
       </h1>
       <div class="form-style-5 slideInDown animated">
-        <form method="POST" action="Export_Excel.php">
+        <form method="POST" action="Export_Excel.php" >
           <input type="date" name="date_sel" id="date_sel" placeholder="dd-mm-yyyy">
           <button type="button" name="user_log" id="user_log">Select Date</button>
-          <input type="submit" name="To_Excel" value="Export to Excel">
+          <button type="buttom" name="To_Excel" >Export to Excel</button>
         </form>
       </div>
       <div class="tbl-header slideInRight animated">

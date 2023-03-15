@@ -96,7 +96,7 @@ td {
   position: absolute; 
   top: 22.5px;
 }
-@media (max-width:684px) {
+@media (max-width:772px) {
   .nav > .nav-btn {
     display: inline-block;
     position: absolute;
