@@ -78,16 +78,20 @@ if (isset($_GET['mode'])) {
     }
     ?>
 
-    <a class="nav-link" href="home.php">Students</a>
-    <a class="nav-link" href="UsersLog.php">Attendance Log</a>
+    <a href="home.php" <?php if (basename($_SERVER['PHP_SELF']) == 'home.php'){ echo 'class="active"';}else{echo 'class="nav-link"';}; ?>>Students</a>
+    <a  href="UsersLog.php" <?php if (basename($_SERVER['PHP_SELF']) == 'UsersLog.php'){ echo 'class="active"';}else{echo 'class="nav-link"';}; ?>>Attendance Log</a>
     <?php if ($_COOKIE['username'] == "admin") {
-      echo '<a class="nav-link" href="ManageUsers.php">Manage Students</a>';
+      if (basename($_SERVER["PHP_SELF"]) == "ManageUsers.php"){ 
+        echo "<a class='nav-link active' href='ManageUsers.php'>Manage Students</a>";}else{
+          echo "<a class='nav-link ' href='ManageUsers.php'  >Manage Students</a>";
+        };
+      
     } else {
 
     }
     ?>
     <a class="nav-link" href="logout.php">Logout</a>
-    <a class="nav-link" href="<?php echo $ye; ?>"><?php echo $ey; ?></a>
+    <a class="nav-link" href="<?php echo $ye; ?>" ><?php echo $ey; ?></a>
   </div>
 </div>
 

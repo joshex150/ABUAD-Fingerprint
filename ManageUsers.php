@@ -103,7 +103,7 @@ if(!isset($_COOKIE['username'])){
 						<button type="button" name="user_add" class="user_add">Add User</button>
 						<button type="button" name="user_upd" class="user_upd">Update User</button>
 						<!-- <button type="button" name="user_rmo" class="user_rmo">Remove User</button> -->
-						<button id="myBtn">Remove User</button>
+						<button class="myBtn" id="myBtn">Remove User</button>
 					</form>
 
 				</div>

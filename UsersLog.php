@@ -91,8 +91,9 @@ if(!isset($_COOKIE['username'])){
         <form method="POST" action="Export_Excel.php" >
           <input type="date" name="date_sel" id="date_sel" placeholder="dd-mm-yyyy">
           <button type="button" name="user_log" id="user_log">Select Date</button>
-          <button type="buttom" name="To_Excel" >Export to Excel</button>
         </form>
+        <button class="myBtn" id="myBtn">Export to Excel</button>
+        <!-- <button type="buttom" name="To_Excel" >Export to Excel</button> -->
       </div>
       <div class="tbl-header slideInRight animated">
         <table cellpadding="0" cellspacing="0" border="0">
@@ -111,6 +112,7 @@ if(!isset($_COOKIE['username'])){
         <div id="userslog"></div>
       </div>
     </section>
+    <?php include 'popup.php'; ?>
   </main>
   <?php include 'footer.php'; ?>
 </body>
