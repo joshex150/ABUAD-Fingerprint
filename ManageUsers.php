@@ -4,12 +4,22 @@ header("Access-Control-Allow-Methods: *");
 header("Access-Control-Allow-Headers: Content-Type");
 
 session_start();
-$manageusers_css_file = 'css/manageusers.css?v=4';
+$version = time();
+
+$css_url = "css/manageusers.css";
+$css_url_with_version = $css_url . "?v=" .$version;
+$UsersLog_css_file = $css_url_with_version;
+
+$css_url = "css/manageusers-light.css";
+$css_url_with_version_light = $css_url . "?v=" .$version;
+$UsersLog_css_file_light = $css_url_with_version_light;
+
+$manageusers_css_file = $UsersLog_css_file;
 
 // Check if the user has selected a mode and set the appropriate CSS file
 if (isset($_SESSION['mode'])) {
 	if ($_SESSION['mode'] == 'light') {
-		$manageusers_css_file = 'css/manageusers-light.css?v=16';
+		$manageusers_css_file = $UsersLog_css_file_light;
 	}
 }
 
@@ -17,10 +27,10 @@ if (isset($_SESSION['mode'])) {
 if (isset($_GET['mode'])) {
 	if ($_GET['mode'] == 'dark') {
 		$_SESSION['mode'] = 'dark';
-		$manageusers_css_file = 'css/manageusers.css?v=4';
+		$manageusers_css_file = $UsersLog_css_file;
 	} elseif ($_GET['mode'] == 'light') {
 		$_SESSION['mode'] = 'light';
-		$manageusers_css_file = 'css/manageusers-light.css?v=16';
+		$manageusers_css_file = $UsersLog_css_file_light;
 	}
 }
 if(!isset($_COOKIE['username'])){

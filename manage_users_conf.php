@@ -303,7 +303,7 @@ if (isset($_POST['delete'])) {
             exit();
         }
         echo "The User Fingerprint has been deleted";
-        header("Location: getdata.php?DeleteID=check");
+        // header("Location: getdata.php?DeleteID=check");
     } else {
         echo "Select a User to remove";
     }

@@ -1,10 +1,21 @@
 <?php
-$footer_css_file = 'css/footer.css?v=4';
+
+$version = time();
+
+$css_url = "css/footer.css";
+$css_url_with_version = $css_url . "?v=" .$version;
+$UsersLog_css_file = $css_url_with_version;
+
+$css_url = "css/footer-light.css";
+$css_url_with_version_light = $css_url . "?v=" .$version;
+$UsersLog_css_file_light = $css_url_with_version_light;
+
+$footer_css_file = $UsersLog_css_file;
 
 // Check if the user has selected a mode and set the appropriate CSS file
 if (isset($_SESSION['mode'])) {
   if ($_SESSION['mode'] == 'light') {
-    $footer_css_file = 'css/footer-light.css?v=16';
+    $footer_css_file = $UsersLog_css_file_light;
   }
 }
 
@@ -12,10 +23,10 @@ if (isset($_SESSION['mode'])) {
 if (isset($_GET['mode'])) {
   if ($_GET['mode'] == 'dark') {
     $_SESSION['mode'] = 'dark';
-    $footer_css_file = 'css/footer.css?v=4';
+    $footer_css_file = $UsersLog_css_file;
   } elseif ($_GET['mode'] == 'light') {
     $_SESSION['mode'] = 'light';
-    $footer_css_file = 'css/footer-light.css?v=16';
+    $footer_css_file = $UsersLog_css_file_light;
   }
 }
 ?>

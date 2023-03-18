@@ -1,11 +1,22 @@
 <?php include 'cachestart.php'; 
 session_start();
-$home_css_file = 'css/Users.css?v=4';
+
+$version = time();
+
+$css_url = "css/Users.css";
+$css_url_with_version = $css_url . "?v=" .$version;
+$UsersLog_css_file = $css_url_with_version;
+
+$css_url = "css/Users-light.css";
+$css_url_with_version_light = $css_url . "?v=" .$version;
+$UsersLog_css_file_light = $css_url_with_version_light;
+
+$home_css_file = $UsersLog_css_file;
 
 // Check if the user has selected a mode and set the appropriate CSS file
 if (isset($_SESSION['mode'])) {
   if ($_SESSION['mode'] == 'light') {
-    $home_css_file = 'css/Users-light.css?v=16';
+    $home_css_file = $UsersLog_css_file_light;
   }
 }
 
@@ -13,10 +24,10 @@ if (isset($_SESSION['mode'])) {
 if (isset($_GET['mode'])) {
   if ($_GET['mode'] == 'dark') {
     $_SESSION['mode'] = 'dark';
-    $home_css_file = 'css/Users.css?v=4';
+    $home_css_file = $UsersLog_css_file;
   } elseif ($_GET['mode'] == 'light') {
     $_SESSION['mode'] = 'light';
-    $home_css_file = 'css/Users-light.css?v=16';
+    $home_css_file = $UsersLog_css_file_light;
   }
 }
 if(!isset($_COOKIE['username'])){

@@ -6,13 +6,13 @@ if (basename($_SERVER["PHP_SELF"]) == "ManageUsers.php") {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>Popup</title>
-        <link rel="stylesheet" type="text/css" href="css/popup.css?v=3">
+        <link rel="stylesheet" type="text/css" href="css/popup.css?v=1111">
     </head>
     
     <body>
         <main>
             <div id="myModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content slideInDown animated">
                     <span class="close">&times;</span>
                     <p style="padding-bottom: 60px; text-align: center;">This action cannot be undone, <br> are you sure?
                     </p>
@@ -74,7 +74,7 @@ if (basename($_SERVER["PHP_SELF"]) == "UsersLog.php") {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>Popup</title>
-        <link rel="stylesheet" type="text/css" href="css/popup.css?v=3">
+        <link rel="stylesheet" type="text/css" href="css/popup.css?v=1111">
     </head>
     
     <body>
@@ -83,9 +83,9 @@ if (basename($_SERVER["PHP_SELF"]) == "UsersLog.php") {
                 <div class="modal-content slideInDown animated">
                     <span class="close">&times;</span>
                     <p style="padding-bottom: 20px; text-align: center;">Select an export type</p>
-                    <form method="POST" action="Export_Excel.php">
+                    <form style="width: 100%;" method="POST" action="Export_Excel.php">
                     <div class="lector" >
-                    <span style="padding-top: 15px;">Date:</span> <input class="excel" type="date" name="date_sel" id="date_sel" placeholder="dd-mm-yyyy">
+                    <span style="padding-top: 15px; margin-right:5px;">Date:</span> <input class="excel" type="date" name="date_sel" id="date_sel" placeholder="dd-mm-yyyy">
                     </div>
                     <button id="yes-button" name="To_Excel" class="To_Excel">Export selected date</button><br><br> <div style="text-align: center;">OR</div>
                     <br><br><label>Advance Export select range:</label><br><br>

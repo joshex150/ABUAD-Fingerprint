@@ -230,28 +230,52 @@ if (isset($_POST['FingerID'])) {
     }
 }
 if (isset($_POST['Get_Fingerid'])) {
-
+    
     if ($_POST['Get_Fingerid'] == "get_id") {
-        $sql = "SELECT fingerprint_id FROM users WHERE add_fingerid=1";
-        $result = mysqli_stmt_init($conn);
-        if (!mysqli_stmt_prepare($result, $sql)) {
-            echo "SQL Error: Statement preparation failed";
+        $sql= "SELECT fingerprint_id FROM users WHERE add_fingerid=1";
+        $result = mysqli_query($conn, $sql);
+        if (!$result) {
+            echo "SQL_Error_Select";
             exit();
-        } else {
-            mysqli_stmt_execute($result);
-            $resultl = mysqli_stmt_get_result($result);
-            if ($row = mysqli_fetch_assoc($resultl)) {
-                echo "add-id" . $row['fingerprint_id'];
+        }
+        else{
+            $row = mysqli_fetch_assoc($result);
+            if ($row) {
+                echo "add-id".$row['fingerprint_id'];
                 exit();
-            } else {
+            }
+            else{
                 echo "Nothing";
                 exit();
             }
         }
-    } else {
+    }
+    else{
         exit();
     }
 }
+if (isset($_POST['confirm_id'])){
+    $fingerid = $_POST['confirm_id'];
+    $sql = "UPDATE users SET fingerprint_select=0 WHERE fingerprint_select=1";
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
+        echo "SQL_Error_Select";
+        exit();
+    } else {
+        $sql = "UPDATE users SET add_fingerid=0, fingerprint_select=1 WHERE fingerprint_id=?";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            echo "SQL_Error_Select";
+            exit();
+        } else {
+            mysqli_stmt_bind_param($stmt, "s", $fingerid);
+            mysqli_stmt_execute($stmt);
+            echo "Fingerprint has been added!";
+            exit();
+        }
+    }
+}
+
 if (isset($_POST['DeleteID'])) {
     if ($_POST['DeleteID'] == "check") {
         // Define the SQL query to select the fingerprint_id with del_fingerid value of 1
