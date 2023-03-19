@@ -2,9 +2,8 @@
 #include <ESP8266HTTPClient.h>
 #include <SoftwareSerial.h>
 #include <Adafruit_Fingerprint.h>
-//Fingerprint scanner Pins
-#define Finger_Rx 5 //5
-#define Finger_Tx 2 //2
+#define Finger_Rx 5
+#define Finger_Tx 2
 #define SERVER_IP "abuad-fingerprint.000webhostapp.com/getdata.php"
 #ifndef STASSID
 #define STASSID "Joshua"
@@ -15,8 +14,7 @@ Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 String postData ;
 WiFiClientSecure client;
 HTTPClient http;
-
-int FingerID = 0  ;     // The Fingerprint ID from the scanner 
+int FingerID = 0 ;
 uint8_t id;
 #endif
 
@@ -42,6 +40,7 @@ void loop() {
     //Serial.println(FingerID);
     DisplayFingerprintID();
     ChecktoAddID();
+    delay(3000);
     ChecktoDeleteID();
   }
 
@@ -72,35 +71,28 @@ void DisplayFingerprintID(){
   }
 }
 void SendFingerprintID( int finger ){
-  Serial.print("[HTTP] begin...\n");
   // configure traged server and url
-  postData = "FingerID=" + String(finger);
+  postData = "?FingerID=" + String(finger);
   client.setFingerprint(fingerprint);
-  http.begin(client, "https://" SERVER_IP);  // HTTP
+  http.begin(client, "https://" SERVER_IP + postData);  // HTTP
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-  Serial.print("[HTTP] POST...\n");
   // start connection and send HTTP header and body
-  int httpCode = http.POST(postData);
+  int httpCode = http.GET();
 
   // httpCode will be negative on error
   if (httpCode > 0) {
     // HTTP header has been send and Server response header has been handled
-    Serial.printf("[HTTP] POST... code: %d\n", httpCode);
-
     // file found at server
     if (httpCode == HTTP_CODE_OK) {
       const String& payload = http.getString();
       Serial.println("*******************************************\n");
-          Serial.println("received SendFingerprintID httpcode:\n");
-          Serial.println(httpCode);
-          Serial.println("received SendFingerprintID payload:\n");
+          Serial.println("received SendFingerprintID payload:");
           Serial.println(payload);
           Serial.println("*******************************************\n");
-          Serial.println("\n");
     }
   } else {
-    Serial.printf("[HTTP] POST... failed, error: %s\n", http.errorToString(httpCode).c_str());
+    Serial.printf("Failed to send fingerprint, error: %s\n", http.errorToString(httpCode).c_str());
   }
 
   http.end();
@@ -167,16 +159,14 @@ int getFingerprintID() {
   return finger.fingerID;
 }
 void ChecktoAddID(){
-  Serial.print("[HTTP] begin...\n");
   // configure traged server and url
-  postData = "Get_Fingerid=get_id";
+  postData = "?Get_Fingerid=get_id";
   client.setFingerprint(fingerprint);
-  http.begin(client, "https://" SERVER_IP);  // HTTP
+  http.begin(client, "https://" SERVER_IP + postData);  // HTTP
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-  Serial.print("[HTTP] POST...\n");
   // start connection and send HTTP header and body
-  int httpCode = http.POST(postData);
+  int httpCode = http.GET();
 
   // httpCode will be negative on error
   if (httpCode > 0) {
@@ -191,12 +181,9 @@ void ChecktoAddID(){
           id = add_id.toInt();
           getFingerprintEnroll();
           Serial.println("******************ChecktoAddID*************************\n");
-          Serial.println("received ChecktoAddID httpcode:\n");
-          Serial.println(httpCode);
-          Serial.println("received ChecktoAddID payload:\n");
+          Serial.println("received ChecktoAddID payload:");
           Serial.println(payload);
           Serial.println("******************ChecktoAddID*************************\n");
-          Serial.println("\n");
         }
     }
   } else {
@@ -354,8 +341,6 @@ uint8_t getFingerprintEnroll() {
   return p;
 }
 void confirmAdding(int identity){
-  
-  Serial.print("[HTTP] begin...\n");
   // configure traged server and url
   postData = "?confirm_id=" + String(identity);
 
@@ -371,23 +356,17 @@ void confirmAdding(int identity){
   if (httpCode > 0) {
   String payload = http.getString();
   Serial.println("******************confirmAdding*************************\n");
-  Serial.println("received confirmAdding httpcode:\n");
-  Serial.println(httpCode);
-  Serial.println("received confirmAdding payload:\n");
+  Serial.println("received confirmAdding payload:");
   Serial.println(payload);
   Serial.println("******************confirmAdding*************************\n");
-  Serial.println("\n");
   }else{
-    Serial.printf("Unable to post", httpCode);
+    Serial.printf("Unable to confirm added fingerprint, will retry now", httpCode);
     delay(1000);
     confirmAdding(identity);
-    Serial.println(identity);
   }
   http.end();
 }
 void ChecktoDeleteID(){
-  
-  Serial.print("[HTTP] begin...\n");
   // configure traged server and url
   postData = "?DeleteID=check";
  
@@ -401,7 +380,6 @@ void ChecktoDeleteID(){
 
   if (httpCode > 0) {
   String payload = http.getString();
-  Serial.println(payload);
   Serial.println("******************ChecktoDeleteID*************************\n");
   if (payload.substring(0, 6) == "del-id") {
     String del_id = payload.substring(6);
@@ -409,9 +387,8 @@ void ChecktoDeleteID(){
     deleteFingerprint( del_id.toInt() );
   }
   Serial.println("******************ChecktoDeleteID*************************\n");
-  Serial.println("\n");
   }else{
-    Serial.printf("Unable to GET", httpCode);
+    Serial.printf("Unable to GET deleted users", httpCode);
     delay(1000);
   }
   http.end();
