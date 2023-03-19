@@ -72,6 +72,12 @@ if(!isset($_COOKIE['username'])){
 			updateManageUsers();
 			setInterval(updateManageUsers, 5000);
 		});
+		$(document).ready(function() {
+          function hideAlert() {
+            $("#alert").hide();
+          }
+          setInterval(hideAlert, 10000); // hide alert every 10 seconds
+        });
 	</script>
 </head>
 
@@ -87,7 +93,7 @@ if(!isset($_COOKIE['username'])){
 			<h1 style="margin-top: 2rem;" class="slideInDown animated">Add, update or remove student information</h1>
 			<div class="block">
 				<div class="form-style-5 slideInDown animated">
-					<div class="alert"><label id="alert"></label></div>
+					<div class="alert slideInDown animated"><label id="alert"></label></div>
 					<form>
 						<fieldset>
 							<legend><span class="number">1</span> User Fingerprint ID:</legend>

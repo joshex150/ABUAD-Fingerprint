@@ -105,14 +105,15 @@
 }
 .form-style-5 #alert {
   display: none;
-  width: 90%;
+  width: -webkit-fill-available;
   text-align: center;
   position: absolute;
+  margin-right: 20px;
   color: #fff;
   padding: 5px;
-  border: 1px solid #2e6b32;
-  background: -webkit-linear-gradient(left, #70c276, #2e6b32);
-  background: linear-gradient(to right, #70c276, #2e6b32);
+  border: 1px solid #000000;
+  /* background: -webkit-linear-gradient(left, #70c276, #2e6b32); */
+  background: linear-gradient(to right, #070707, #4a4a4a);
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 
