@@ -70,7 +70,7 @@ if (isset($_POST["Range_Excel"])) {
     $date_from = $start;
     $date_to = $stop;
 
-    if (empty($_POST['range_start']) || empty($_POST['range_stop'])) {
+    if (empty($_POST['range_start']) || empty($_POST['range_end'])) {
         header("location: UsersLog.php?empty-inputs");
     }
     // Initialize output
