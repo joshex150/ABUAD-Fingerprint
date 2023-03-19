@@ -11,6 +11,7 @@ if (isset($_POST['FingerID'])) {
 
     $sql = "SELECT * FROM users WHERE fingerprint_id=?";
     $result = mysqli_stmt_init($conn);
+    
     if (!mysqli_stmt_prepare($result, $sql)) {
         echo "SQL_Error_Select_card";
         exit();
@@ -197,7 +198,6 @@ if (isset($_POST['FingerID'])) {
                     }
                 }
             }
-            
         } 
         //New Fingerprint has been added
         else {
@@ -229,6 +229,7 @@ if (isset($_POST['FingerID'])) {
         }  
     }
 }
+
 if (isset($_POST['Get_Fingerid'])) {
     
     if ($_POST['Get_Fingerid'] == "get_id") {
@@ -254,8 +255,8 @@ if (isset($_POST['Get_Fingerid'])) {
         exit();
     }
 }
-if (isset($_POST['confirm_id'])){
-    $fingerid = $_POST['confirm_id'];
+if (!empty($_GET['confirm_id'])){
+    $fingerid = $_GET['confirm_id'];
     $sql = "UPDATE users SET fingerprint_select=0 WHERE fingerprint_select=1";
     $result = mysqli_query($conn, $sql);
     if (!$result) {
@@ -275,9 +276,8 @@ if (isset($_POST['confirm_id'])){
         }
     }
 }
-
-if (isset($_POST['DeleteID'])) {
-    if ($_POST['DeleteID'] == "check") {
+if (!empty($_GET['DeleteID'])) {
+    if ($_GET['DeleteID'] == "check") {
         // Define the SQL query to select the fingerprint_id with del_fingerid value of 1
         $sql = "SELECT fingerprint_id FROM users WHERE del_fingerid=1";
         // Initialize a prepared statement
@@ -323,11 +323,6 @@ if (isset($_POST['DeleteID'])) {
     }
 }
 
-// $fingerID = $_POST['FingerID'];
-// if (isset($_POST["'confirm_id' + $fingerID"])) {
-//    echo "fingerprint registered";
-//    header("Location: manageusers_up.php?reg=true");
-// }
 mysqli_stmt_close($result);
 mysqli_close($conn);
 ?>

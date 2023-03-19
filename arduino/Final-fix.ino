@@ -13,6 +13,9 @@ const char fingerprint[] PROGMEM = "92 99 1E EC B2 E4 C2 E2 E3 D4 05 9D 5A 31 CB
 SoftwareSerial mySerial(Finger_Rx, Finger_Tx);
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 String postData ;
+WiFiClientSecure client;
+HTTPClient http;
+
 int FingerID = 0  ;     // The Fingerprint ID from the scanner 
 uint8_t id;
 #endif
@@ -39,6 +42,7 @@ void loop() {
     //Serial.println(FingerID);
     DisplayFingerprintID();
     ChecktoAddID();
+    ChecktoDeleteID();
   }
 
   //delay(10000);
@@ -68,8 +72,6 @@ void DisplayFingerprintID(){
   }
 }
 void SendFingerprintID( int finger ){
-  WiFiClientSecure client;
-  HTTPClient http;
   Serial.print("[HTTP] begin...\n");
   // configure traged server and url
   postData = "FingerID=" + String(finger);
@@ -165,8 +167,6 @@ int getFingerprintID() {
   return finger.fingerID;
 }
 void ChecktoAddID(){
-  WiFiClientSecure client;
-  HTTPClient http;
   Serial.print("[HTTP] begin...\n");
   // configure traged server and url
   postData = "Get_Fingerid=get_id";
@@ -190,12 +190,12 @@ void ChecktoAddID(){
           Serial.println(add_id);
           id = add_id.toInt();
           getFingerprintEnroll();
-          Serial.println("*******************************************\n");
+          Serial.println("******************ChecktoAddID*************************\n");
           Serial.println("received ChecktoAddID httpcode:\n");
           Serial.println(httpCode);
           Serial.println("received ChecktoAddID payload:\n");
           Serial.println(payload);
-          Serial.println("*******************************************\n");
+          Serial.println("******************ChecktoAddID*************************\n");
           Serial.println("\n");
         }
     }
@@ -335,7 +335,7 @@ uint8_t getFingerprintEnroll() {
   p = finger.storeModel(id);
   if (p == FINGERPRINT_OK) {
     Serial.println("Stored!");
-    confirmAdding();
+    confirmAdding(id);
   } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
     Serial.println("Communication error");
     delay(2000);
@@ -353,33 +353,92 @@ uint8_t getFingerprintEnroll() {
 
   return p;
 }
-void confirmAdding(){
-  WiFiClientSecure client;
-  HTTPClient http;
+void confirmAdding(int identity){
+  
   Serial.print("[HTTP] begin...\n");
   // configure traged server and url
-  postData = "confirm_id=" + String(id);
+  postData = "?confirm_id=" + String(identity);
+
   client.setFingerprint(fingerprint);
-  http.begin(client, "https://" SERVER_IP);  // HTTP
-  http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+  http.begin(client, "https://" SERVER_IP + postData);
+  // http.addHeader("Content-Type", "application/x-www-form-urlencoded");
   http.addHeader("Access-Control-Request-Method", "GET");
 
-  Serial.print("[HTTP] POST...\n");
-  // start connection and send HTTP header and body
-  int httpCode = http.POST(postData);
-  // httpCode will be negative on error
-  // HTTP header has been send and Server response header has been handled
-  // file found at server
+  Serial.println("https://" SERVER_IP + postData);
+
+  int httpCode = http.GET();
+
+  if (httpCode > 0) {
   String payload = http.getString();
-  Serial.println("*******************************************\n");
+  Serial.println("******************confirmAdding*************************\n");
   Serial.println("received confirmAdding httpcode:\n");
   Serial.println(httpCode);
   Serial.println("received confirmAdding payload:\n");
   Serial.println(payload);
-  Serial.println("*******************************************\n");
+  Serial.println("******************confirmAdding*************************\n");
   Serial.println("\n");
-
+  }else{
+    Serial.printf("Unable to post", httpCode);
+    delay(1000);
+    confirmAdding(identity);
+    Serial.println(identity);
+  }
   http.end();
+}
+void ChecktoDeleteID(){
+  
+  Serial.print("[HTTP] begin...\n");
+  // configure traged server and url
+  postData = "?DeleteID=check";
+ 
+  client.setFingerprint(fingerprint);
+  http.begin(client, "https://" SERVER_IP + postData);
+  http.addHeader("Access-Control-Request-Method", "GET");
+
+  Serial.println("https://" SERVER_IP + postData);
+
+  int httpCode = http.GET();
+
+  if (httpCode > 0) {
+  String payload = http.getString();
+  Serial.println(payload);
+  Serial.println("******************ChecktoDeleteID*************************\n");
+  if (payload.substring(0, 6) == "del-id") {
+    String del_id = payload.substring(6);
+    Serial.println(del_id);
+    deleteFingerprint( del_id.toInt() );
+  }
+  Serial.println("******************ChecktoDeleteID*************************\n");
+  Serial.println("\n");
+  }else{
+    Serial.printf("Unable to GET", httpCode);
+    delay(1000);
+  }
+  http.end();
+}
+uint8_t deleteFingerprint( int id) {
+  uint8_t p = -1;
+  
+  p = finger.deleteModel(id);
+
+  if (p == FINGERPRINT_OK) {
+    //Serial.println("Deleted!");
+    return 0;
+  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
+    //Serial.println("Communication error");
+    delay(3000);
+    return p;
+  } else if (p == FINGERPRINT_BADLOCATION) {
+    //Serial.println("Could not delete in that location");
+    delay(1000);
+    return p;
+  } else if (p == FINGERPRINT_FLASHERR) {
+    //Serial.println("Error writing to flash");
+    return p;
+  } else {
+    //Serial.print("Unknown error: 0x"); Serial.println(p, HEX);
+    return p;
+  }   
 }
 void connectToWiFi(){
   WiFi.begin(STASSID, STAPSK);
