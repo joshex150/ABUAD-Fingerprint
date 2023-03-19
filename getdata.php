@@ -5,9 +5,9 @@ date_default_timezone_set('Africa/Lagos');
 $d = date("Y-m-d");
 $t = date("H:i:sa");
 
-if (isset($_POST['FingerID'])) {
+if (!empty($_GET['FingerID'])) {
 
-    $fingerID = $_POST['FingerID'];
+    $fingerID = $_GET['FingerID'];
 
     $sql = "SELECT * FROM users WHERE fingerprint_id=?";
     $result = mysqli_stmt_init($conn);
@@ -230,9 +230,9 @@ if (isset($_POST['FingerID'])) {
     }
 }
 
-if (isset($_POST['Get_Fingerid'])) {
+if (!empty($_GET['Get_Fingerid'])) {
     
-    if ($_POST['Get_Fingerid'] == "get_id") {
+    if ($_GET['Get_Fingerid'] == "get_id") {
         $sql= "SELECT fingerprint_id FROM users WHERE add_fingerid=1";
         $result = mysqli_query($conn, $sql);
         if (!$result) {

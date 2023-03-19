@@ -6,8 +6,8 @@ setcookie('username', $_SESSION['username'], time(), '/');
 
 setcookie('course', $_SESSION['course'], time(), '/' );
 
-session_unset();
+unset($_SESSION['username']);
 
-session_destroy();
+unset($_SESSION['course']);
 
 header("Location: index.php");
