@@ -58,21 +58,6 @@ if ($conn->query($sql) === TRUE) {
 	echo "Error creating table: " . $conn->error;
 }
 
-$sql = "CREATE TABLE IF NOT EXISTS `TEST501` (
-		`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-		`username` varchar(100) NOT NULL,
-		`serialnumber` text NOT NULL,
-		`fingerprint_id` int(5) NOT NULL,
-		`checkindate` date NOT NULL,
-		`timein` time NOT NULL,
-		`timeout` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1";
-
-if ($conn->query($sql) === TRUE) {
-	echo "Table users_logs created successfully";
-} else {
-	echo "Error creating table: " . $conn->error;
-}
 
 $sql = "CREATE TABLE IF NOT EXISTS `login` (
 		`username` varchar(255) NOT NULL,
