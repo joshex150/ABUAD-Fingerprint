@@ -111,7 +111,7 @@ if(!isset($_COOKIE['username'])){
 							<legend><span class="number">3</span> Additional Info</legend>
 							<label>
 								Time In:
-								<input type="time" name="timein" id="timein" value="00:00:00">
+								<input type="time" name="timein" id="timein" <?php $date = date("H:i:s"); echo "value='$date'" ?> >
 								<input type="radio" name="gender" class="gender" value="Female">Female
 								<input type="radio" name="gender" class="gender" value="Male" checked="checked">Male
 							</label>

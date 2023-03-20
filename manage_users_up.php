@@ -14,6 +14,14 @@
         $resultl = mysqli_stmt_get_result($result);
       if (mysqli_num_rows($resultl) > 0){
           while ($row = mysqli_fetch_assoc($resultl)){
+            if($row['add_fingerid'] == 1 && $row['fingerprint_select'] == 1){
+                echo "<script>$(document).ready(function() {
+                  function hidAlert() {
+                    $('#alert').show(); $('#alert').text('This prompt will close when a Fingerprint is added');
+                  }
+                  hidAlert(); // hide alert every 10 seconds
+                });</script>";
+            }
   ?>
               <div>
               <TR>

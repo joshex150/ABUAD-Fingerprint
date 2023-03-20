@@ -28,7 +28,21 @@
       else{
         mysqli_stmt_execute($result);
           $resultl = mysqli_stmt_get_result($result);
+          if(mysqli_num_rows($resultl) < 1){
+            echo "<script>$(document).ready(function() {
+              function hidAlert() {
+                $('#alert').show(); $('#alert').text('No Attendance taken today');
+              }
+              hidAlert(); // hide alert every 10 seconds
+            });</script>";
+          }
         if (mysqli_num_rows($resultl) > 0){
+          echo "<script>$(document).ready(function() {
+            function hideAlert() {
+              $('#alert').hide();
+            }
+            hideAlert(); // hide alert every 10 seconds
+          });</script>";
             while ($row = mysqli_fetch_assoc($resultl)){
       ?>
                   <TR>

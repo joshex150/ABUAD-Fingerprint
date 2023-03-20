@@ -118,6 +118,7 @@ if(!isset($_COOKIE['username'])){
         </table>
       </div>
       <div class="tbl-content slideInRight animated">
+      <div class="alert slideInDown animated" style="width: -webkit-fill-available;text-align: center;position: absolute;top: 275.5px;color: white;font-size: 20px;"><label id="alert"></label></div>
         <div id="userslog"></div>
       </div>
     </section>
