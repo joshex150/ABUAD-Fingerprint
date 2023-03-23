@@ -7,11 +7,11 @@ session_start();
 
 $version = time();
 
-$css_url = "css/omega.css";
+$css_url = "css/omegareset.css";
 $css_url_with_version = $css_url . "?v=" .$version;
 $UsersLog_css_file = $css_url_with_version;
 
-$css_url = "css/omega-light.css";
+$css_url = "css/omegareset-light.css";
 $css_url_with_version_light = $css_url . "?v=" .$version;
 $UsersLog_css_file_light = $css_url_with_version_light;
 
@@ -39,7 +39,7 @@ if (isset($_GET['mode'])) {
 <html>
 
 <head>
-  <title>Login</title>
+  <title>Reset Password</title>
   <link rel="stylesheet" type="text/css" href="<?php echo $login_css_file; ?>" />
   <link rel="icon" type="image/x-icon" href="images/logo.ico">
   <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5">
@@ -82,24 +82,20 @@ if (isset($_GET['mode'])) {
         <div class="shape"></div>
       </div>
       <a style="text-decoration: none; position: absolute; right: 10px; top: 10px;" class="mode-index" href="<?php echo $ye; ?>"><?php echo $ey; ?></a>
-      <form action="login.php" method="post">
+      <form action="phpmailer.php" method="post">
         <?php if (isset($_GET['error'])) { ?>
           <p style="text-align: center" class="error">
             <?php echo $_GET['error']; ?>
           </p>
         <?php } ?>
-        <h3>Login Here</h3>
+        <h3>Enter registered E-mail</h3>
 
-        <label for="username">Username</label>
-        <input placeholder="Email or Phone" type="text" id="username" name="username" required="" />
+        <label for="username">Email</label>
+        <input placeholder="Email" type="mail" id="reciever" name="reciever" required="" />
 
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password" name="password" required="" />
-
-        <button title="" id="signin" name="login" type="submit" data-original-title="Click Here to Sign In">
-          Log In
+        <button title="" id="reset" name="reset" type="submit" data-original-title="Click Here to Sign In">
+          Reset password
         </button>
-        <center><span><a href="reset_pass.php">Reset Password</a></span></center>
       </form>
     </section>
   </main>
