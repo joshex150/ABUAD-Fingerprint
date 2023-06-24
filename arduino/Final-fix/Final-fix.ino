@@ -3,7 +3,7 @@
 #include <SoftwareSerial.h>
 #include <Adafruit_Fingerprint.h>
 #define Finger_Rx 5
-#define Finger_Tx 2
+#define Finger_Tx 4
 #define SERVER_IP "abuad-fingerprint.000webhostapp.com/getdata.php"
 #ifndef STASSID
 #define STASSID "Joshua"
@@ -22,7 +22,6 @@ void setup() {
 
   Serial.begin(115200);
   finger.begin(57600);
-
   Serial.println();
   Serial.println();
   Serial.println();

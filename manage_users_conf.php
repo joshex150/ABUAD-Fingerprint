@@ -4,9 +4,7 @@ require 'connectDB.php';
 
 // select passenger 
 if (isset($_GET['select'])) {
-
     $Finger_id = $_GET['Finger_id'];
-
     $sql = "SELECT fingerprint_select FROM users WHERE fingerprint_select=1";
     $result = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($result, $sql)) {
@@ -59,11 +57,9 @@ if (isset($_POST['Add'])) {
     $Uname = $_POST['name'];
     $Number = $_POST['number'];
     $Email = $_POST['email'];
-
     //optional
     $Timein = $_POST['timein'];
     $Gender = $_POST['gender'];
-
     //check if there any selected user
     $sql = "SELECT username FROM users WHERE fingerprint_select=1";
     $result = mysqli_stmt_init($conn);
@@ -166,7 +162,7 @@ if (isset($_POST['Add_fingerID'])) {
                                 exit();
                             } else {
                                 mysqli_stmt_execute($result);
-                                $sql = "INSERT INTO users ( username, serialnumber, gender, email, fingerprint_id, fingerprint_select, user_date, time_in, del_fingerid , add_fingerid) VALUES (?, ?, ?, ?, ?, 1, CURDATE(), ?, 0, 1)";
+                                $sql = "INSERT INTO users ( username, serialnumber, gender, email, fingerprint_id, fingerprint_select, user_date, time_in, del_fingerid , add_fingerid, pass_reset) VALUES (?, ?, ?, ?, ?, 1, CURDATE(), ?, 0, 1, 0)";
                                 $result = mysqli_stmt_init($conn);
                                 if (!mysqli_stmt_prepare($result, $sql)) {
                                     echo "SQL_Error";
@@ -295,7 +291,7 @@ if (isset($_POST['delete'])) {
     }
 
     if (mysqli_num_rows($result) > 0) {
-        $sql = "UPDATE users SET del_fingerid=1 WHERE fingerprint_select=1";
+        $sql = "UPDATE users SET del_fingerid=1, add_fingerid=0 WHERE fingerprint_select=1";
         $result = mysqli_query($conn, $sql);
 
         if (!$result) {
